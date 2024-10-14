@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                 "+"->findViewById<TextView>(R.id.text3).text = if(hasDecimalPart(num1+num2)){(num1+num2).toString()}else{(num1+num2).toInt().toString()}
                 "-"->findViewById<TextView>(R.id.text3).text = if(hasDecimalPart(num1+num2)){(num1-num2).toString()}else{(num1-num2).toInt().toString()}
                 "x"->findViewById<TextView>(R.id.text3).text = if(hasDecimalPart(num1+num2)){(num1*num2).toString()}else{(num1*num2).toInt().toString()}
-                "/"->if (num2==0.0){findViewById<TextView>(R.id.text3).text="На 0 делить нельзя"}else{findViewById<TextView>(R.id.text3).text = (num1/num2).toString()}
+                "/"->if (num2==0.0){findViewById<TextView>(R.id.text3).text="На 0 делить нельзя"}else if (hasDecimalPart(num1/num2)){findViewById<TextView>(R.id.text3).text = (num1/num2).toString()}else{findViewById<TextView>(R.id.text3).text = (num1/num2).toInt().toString()}
             }
         }catch (e: NumberFormatException) {
             findViewById<TextView>(R.id.text3).text = "Ошибка"
