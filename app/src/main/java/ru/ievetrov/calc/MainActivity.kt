@@ -12,8 +12,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        val result1Text = findViewById<TextView>(R.id.text1)
-        val result2Text = findViewById<TextView>(R.id.text2)
+
         val result3Text = findViewById<TextView>(R.id.text3)
 
 
@@ -35,12 +34,7 @@ class MainActivity : AppCompatActivity() {
         val button_dot = findViewById<Button>(R.id.button_dot)
         val button_clear = findViewById<Button>(R.id.button_clear)
 
-
-
-
-        var equals = 0
-        result3Text.text = equals.toString()
-
+        findViewById<TextView>(R.id.text3).text = ""
 
         button_1.setOnClickListener {update("1")}
         button_2.setOnClickListener {update("2")}
@@ -61,24 +55,19 @@ class MainActivity : AppCompatActivity() {
 
         button_equals.setOnClickListener {result()}
         button_clear.setOnClickListener {clear()}
-
-
-
-
     }
     fun clear(){
         findViewById<TextView>(R.id.text1).text=""
         findViewById<TextView>(R.id.text3).text=""
     }
     fun update(num: String) {
-        val resultText = findViewById<TextView>(R.id.text3)
-        if (resultText.text=="0"){
-            resultText.text = ""
-            val res: String = resultText.text.toString() + num
-            resultText.text = res
+        if (findViewById<TextView>(R.id.text3).text=="0"){
+            findViewById<TextView>(R.id.text3).text = ""
+            val res: String = findViewById<TextView>(R.id.text3).text.toString() + num
+            findViewById<TextView>(R.id.text3).text = res
         }else{
-            val res: String = resultText.text.toString() + num
-            resultText.text = res
+            val res: String = findViewById<TextView>(R.id.text3).text.toString() + num
+            findViewById<TextView>(R.id.text3).text = res
         }
     }
     fun mark(mark: String) {
@@ -98,15 +87,18 @@ class MainActivity : AppCompatActivity() {
             val num2 = num2Text.toDouble()
             when(findViewById<TextView>(R.id.text2).text)
             {
-                "+"->findViewById<TextView>(R.id.text3).text = (num1+num2).toString()
-                "-"->findViewById<TextView>(R.id.text3).text = (num1-num2).toString()
-                "x"->findViewById<TextView>(R.id.text3).text = (num1*num2).toString()
-                "/"->findViewById<TextView>(R.id.text3).text = (num1/num2).toString()
+                "+"->findViewById<TextView>(R.id.text3).text = if(hasDecimalPart(num1+num2)){(num1+num2).toString()}else{(num1+num2).toInt().toString()}
+                "-"->findViewById<TextView>(R.id.text3).text = if(hasDecimalPart(num1+num2)){(num1-num2).toString()}else{(num1-num2).toInt().toString()}
+                "x"->findViewById<TextView>(R.id.text3).text = if(hasDecimalPart(num1+num2)){(num1*num2).toString()}else{(num1*num2).toInt().toString()}
+                "/"->if (num2==0.0){findViewById<TextView>(R.id.text3).text="На 0 делить нельзя"}else{findViewById<TextView>(R.id.text3).text = (num1/num2).toString()}
             }
         }catch (e: NumberFormatException) {
             findViewById<TextView>(R.id.text3).text = "Ошибка"
         }
 
+    }
+    fun hasDecimalPart(number: Double): Boolean {
+        return number % 1 != 0.0
     }
 }
 
