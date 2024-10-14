@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
     }
     fun clear(){
         findViewById<TextView>(R.id.text1).text=""
+        findViewById<TextView>(R.id.text2).text=""
         findViewById<TextView>(R.id.text3).text=""
     }
     fun update(num: String) {
@@ -95,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         }catch (e: NumberFormatException) {
             findViewById<TextView>(R.id.text3).text = "Ошибка"
         }
+        findViewById<TextView>(R.id.text2).text="="
 
     }
     fun hasDecimalPart(number: Double): Boolean {
